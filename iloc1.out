@@ -1,0 +1,36 @@
+	// Assign STATIC_AREA_ADDRESS to register "r0"
+ 	 loadI 1024 	=> r0 
+	// Compute address of variable "i" at offset 4 in register 2
+ 	 loadI 4 	=> r1 
+ 	 add r0, r1 	=> r2 
+ 	 loadI 0 	=> r3 
+ 	 store r3 	=> r2 
+	// Compute address of variable "a" at offset 0 in register 5
+ 	 loadI 0 	=> r4 
+ 	 add r0, r4 	=> r5 
+ 	 loadI 1 	=> r6 
+ 	 store r6 	=> r5 
+	// Initialize ind. variable "i" at offset 4 with lower bound value 0
+ 	 loadI 4 	=> r7 
+ 	 add r0, r7 	=> r8 
+ 	 loadI 0 	=> r11 
+ 	 loadI 100 	=> r12 
+ 	 store r11 	=> r8 
+	// Generate control code for "FOR" 
+L0:	 loadAI r0, 4 	=> r9 
+ 	 cmp_LE r9, r12 	=> r10
+ 	 cbr r10 	=> L1, L2
+L1:	 nop 
+	// Compute address of variable "a" at offset 0 in register 14
+ 	 loadI 0 	=> r13 
+ 	 add r0, r13 	=> r14 
+	// Load RHS value of variable "a" at offset 0
+ 	 loadAI r0, 0 	=> r15 
+ 	 loadI 2 	=> r16 
+ 	 add r15, r16 	=> r17 
+ 	 store r17 	=> r14 
+ 	 loadAI r0, 4 	=> r18 
+ 	 addI r18, 1 	=> r19 
+ 	 storeAI r19 	=> r0, 4 
+ 	 br L0
+L2:	 nop 

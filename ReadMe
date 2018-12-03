@@ -1,0 +1,8 @@
+Example call of compiler:
+ ./codegen < testcases/demo1
+
+Example call of simulator:
+ ./sim < iloc.out
+
+
+U.Kremer, November 2018

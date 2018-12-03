@@ -1,0 +1,45 @@
+	// Assign STATIC_AREA_ADDRESS to register "r0"
+
+ 	 loadI 1024 	=> r0 
+	// idlist: ID
+
+	// idlist: idlist ID
+
+	// type: INT
+
+	// vardcl: idlist : type
+
+	// vardcls: vardcl
+	// variables |VAR vardcls
+
+	// lhs : ID
+
+ 	 loadI 8 	=> r1 
+ 	 add r0, r1 	=> r2 
+	// exp: ICONST
+
+ 	 loadI 23 	=> r3 
+	// astmt: lhs ASG exp
+
+ 	 store r3 	=> r2 
+	// stmt: astmt
+
+	// stmtlist: stmt
+
+	// lhs : ID
+
+ 	 loadI 12 	=> r4 
+ 	 add r0, r4 	=> r5 
+	// exp: ICONST
+
+ 	 loadI 13 	=> r6 
+	// astmt: lhs ASG exp
+
+ 	 store r6 	=> r5 
+	// stmt: astmt
+
+	// stmtlist: stmtlist; stmt***********
+	// cmpdstmt: BEGIN stmt END
+
+	// block : variables cmpdstmt
+

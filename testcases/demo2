@@ -1,0 +1,12 @@
+program main;
+var a, b, c: integer;
+begin
+  a := 1;
+  b := 2;
+  print(a);
+  print(b);
+  c := a+ b;
+  print(c);
+  c := a * b;
+  print(c)
+end.

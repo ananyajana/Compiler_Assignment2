@@ -1,0 +1,1120 @@
+Nonterminals useless in grammar
+
+   type
+
+
+Terminals unused in grammar
+
+   BOOL
+
+
+Rules useless in grammar
+
+   47 type: ARRAY '[' ICONST ']' OF INT
+   48     | INT
+
+
+Rules useless in parser due to conflicts
+
+   14 idlist1: ID
+
+
+State 11 conflicts: 2 reduce/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 $@1: %empty
+
+    2 program: $@1 PROG ID ';' block PERIOD
+
+    3 block: variables cmpdstmt
+
+    4 variables: %empty
+    5          | VAR vardcls
+
+    6 vardcls: vardcls vardcl ';'
+    7        | vardcl ';'
+    8        | error ';'
+
+    9 vardcl: idlist ':' INT
+   10       | idlist1 ':' ARRAY '[' ICONST ']' OF INT
+
+   11 idlist: idlist ',' ID
+   12       | ID
+
+   13 idlist1: idlist1 ',' ID
+   14        | ID
+
+   15 stmtlist: stmtlist ';' stmt
+   16         | stmt
+   17         | error
+
+   18 stmt: ifstmt
+   19     | fstmt
+   20     | astmt
+   21     | writestmt
+   22     | cmpdstmt
+
+   23 cmpdstmt: BEG stmtlist END
+
+   24 $@2: %empty
+
+   25 ifstmt: ifhead THEN stmt $@2 ELSE stmt
+
+   26 ifhead: IF condexp
+
+   27 $@3: %empty
+
+   28 fstmt: FOR ctrlexp $@3 DO stmt
+
+   29 astmt: lhs ASG exp
+
+   30 lhs: ID
+   31    | ID '[' exp ']'
+
+   32 writestmt: PRINT '(' exp ')'
+
+   33 exp: exp '+' exp
+   34    | exp '-' exp
+   35    | exp '*' exp
+   36    | ID
+   37    | ID '[' exp ']'
+   38    | ICONST
+   39    | error
+
+   40 ctrlexp: ID ASG ICONST ',' ICONST
+   41        | error
+
+   42 condexp: exp NEQ exp
+   43        | exp EQ exp
+   44        | exp LT exp
+   45        | exp LEQ exp
+   46        | error
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 32
+')' (41) 32
+'*' (42) 35
+'+' (43) 33
+',' (44) 11 13 40
+'-' (45) 34
+':' (58) 9 10
+';' (59) 2 6 7 8 15
+'[' (91) 10 31 37
+']' (93) 10 31 37
+error (256) 8 17 39 41 46
+PROG (258) 2
+PERIOD (259) 2
+VAR (260) 5
+INT (261) 9 10
+BOOL (262)
+PRINT (263) 32
+THEN (264) 25
+IF (265) 26
+DO (266) 28
+ARRAY (267) 10
+OF (268) 10
+BEG (269) 23
+END (270) 23
+ASG (271) 29 40
+EQ (272) 43
+NEQ (273) 42
+LT (274) 44
+LEQ (275) 45
+ELSE (276) 25
+FOR (277) 28
+ID (278) 2 11 12 13 14 30 31 36 37 40
+ICONST (279) 10 38 40
+
+
+Nonterminals, with rules where they appear
+
+$accept (35)
+    on left: 0
+program (36)
+    on left: 2, on right: 0
+$@1 (37)
+    on left: 1, on right: 2
+block (38)
+    on left: 3, on right: 2
+variables (39)
+    on left: 4 5, on right: 3
+vardcls (40)
+    on left: 6 7 8, on right: 5 6
+vardcl (41)
+    on left: 9 10, on right: 6 7
+idlist (42)
+    on left: 11 12, on right: 9 11
+idlist1 (43)
+    on left: 13 14, on right: 10 13
+stmtlist (44)
+    on left: 15 16 17, on right: 15 23
+stmt (45)
+    on left: 18 19 20 21 22, on right: 15 16 25 28
+cmpdstmt (46)
+    on left: 23, on right: 3 22
+ifstmt (47)
+    on left: 25, on right: 18
+$@2 (48)
+    on left: 24, on right: 25
+ifhead (49)
+    on left: 26, on right: 25
+fstmt (50)
+    on left: 28, on right: 19
+$@3 (51)
+    on left: 27, on right: 28
+astmt (52)
+    on left: 29, on right: 20
+lhs (53)
+    on left: 30 31, on right: 29
+writestmt (54)
+    on left: 32, on right: 21
+exp (55)
+    on left: 33 34 35 36 37 38 39, on right: 29 31 32 33 34 35 37 42
+    43 44 45
+ctrlexp (56)
+    on left: 40 41, on right: 28
+condexp (57)
+    on left: 42 43 44 45 46, on right: 26
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 1 ($@1)
+
+    program  go to state 1
+    $@1      go to state 2
+
+
+State 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    2 program: $@1 . PROG ID ';' block PERIOD
+
+    PROG  shift, and go to state 4
+
+
+State 3
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 4
+
+    2 program: $@1 PROG . ID ';' block PERIOD
+
+    ID  shift, and go to state 5
+
+
+State 5
+
+    2 program: $@1 PROG ID . ';' block PERIOD
+
+    ';'  shift, and go to state 6
+
+
+State 6
+
+    2 program: $@1 PROG ID ';' . block PERIOD
+
+    VAR  shift, and go to state 7
+
+    $default  reduce using rule 4 (variables)
+
+    block      go to state 8
+    variables  go to state 9
+
+
+State 7
+
+    5 variables: VAR . vardcls
+
+    error  shift, and go to state 10
+    ID     shift, and go to state 11
+
+    vardcls  go to state 12
+    vardcl   go to state 13
+    idlist   go to state 14
+    idlist1  go to state 15
+
+
+State 8
+
+    2 program: $@1 PROG ID ';' block . PERIOD
+
+    PERIOD  shift, and go to state 16
+
+
+State 9
+
+    3 block: variables . cmpdstmt
+
+    BEG  shift, and go to state 17
+
+    cmpdstmt  go to state 18
+
+
+State 10
+
+    8 vardcls: error . ';'
+
+    ';'  shift, and go to state 19
+
+
+State 11
+
+   12 idlist: ID .
+   14 idlist1: ID .
+
+    ':'       reduce using rule 12 (idlist)
+    ':'       [reduce using rule 14 (idlist1)]
+    ','       reduce using rule 12 (idlist)
+    ','       [reduce using rule 14 (idlist1)]
+    $default  reduce using rule 12 (idlist)
+
+
+State 12
+
+    5 variables: VAR vardcls .
+    6 vardcls: vardcls . vardcl ';'
+
+    ID  shift, and go to state 11
+
+    $default  reduce using rule 5 (variables)
+
+    vardcl   go to state 20
+    idlist   go to state 14
+    idlist1  go to state 15
+
+
+State 13
+
+    7 vardcls: vardcl . ';'
+
+    ';'  shift, and go to state 21
+
+
+State 14
+
+    9 vardcl: idlist . ':' INT
+   11 idlist: idlist . ',' ID
+
+    ':'  shift, and go to state 22
+    ','  shift, and go to state 23
+
+
+State 15
+
+   10 vardcl: idlist1 . ':' ARRAY '[' ICONST ']' OF INT
+   13 idlist1: idlist1 . ',' ID
+
+    ':'  shift, and go to state 24
+    ','  shift, and go to state 25
+
+
+State 16
+
+    2 program: $@1 PROG ID ';' block PERIOD .
+
+    $default  reduce using rule 2 (program)
+
+
+State 17
+
+   23 cmpdstmt: BEG . stmtlist END
+
+    error  shift, and go to state 26
+    PRINT  shift, and go to state 27
+    IF     shift, and go to state 28
+    BEG    shift, and go to state 17
+    FOR    shift, and go to state 29
+    ID     shift, and go to state 30
+
+    stmtlist   go to state 31
+    stmt       go to state 32
+    cmpdstmt   go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    fstmt      go to state 36
+    astmt      go to state 37
+    lhs        go to state 38
+    writestmt  go to state 39
+
+
+State 18
+
+    3 block: variables cmpdstmt .
+
+    $default  reduce using rule 3 (block)
+
+
+State 19
+
+    8 vardcls: error ';' .
+
+    $default  reduce using rule 8 (vardcls)
+
+
+State 20
+
+    6 vardcls: vardcls vardcl . ';'
+
+    ';'  shift, and go to state 40
+
+
+State 21
+
+    7 vardcls: vardcl ';' .
+
+    $default  reduce using rule 7 (vardcls)
+
+
+State 22
+
+    9 vardcl: idlist ':' . INT
+
+    INT  shift, and go to state 41
+
+
+State 23
+
+   11 idlist: idlist ',' . ID
+
+    ID  shift, and go to state 42
+
+
+State 24
+
+   10 vardcl: idlist1 ':' . ARRAY '[' ICONST ']' OF INT
+
+    ARRAY  shift, and go to state 43
+
+
+State 25
+
+   13 idlist1: idlist1 ',' . ID
+
+    ID  shift, and go to state 44
+
+
+State 26
+
+   17 stmtlist: error .
+
+    $default  reduce using rule 17 (stmtlist)
+
+
+State 27
+
+   32 writestmt: PRINT . '(' exp ')'
+
+    '('  shift, and go to state 45
+
+
+State 28
+
+   26 ifhead: IF . condexp
+
+    error   shift, and go to state 46
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp      go to state 49
+    condexp  go to state 50
+
+
+State 29
+
+   28 fstmt: FOR . ctrlexp $@3 DO stmt
+
+    error  shift, and go to state 51
+    ID     shift, and go to state 52
+
+    ctrlexp  go to state 53
+
+
+State 30
+
+   30 lhs: ID .
+   31    | ID . '[' exp ']'
+
+    '['  shift, and go to state 54
+
+    $default  reduce using rule 30 (lhs)
+
+
+State 31
+
+   15 stmtlist: stmtlist . ';' stmt
+   23 cmpdstmt: BEG stmtlist . END
+
+    END  shift, and go to state 55
+    ';'  shift, and go to state 56
+
+
+State 32
+
+   16 stmtlist: stmt .
+
+    $default  reduce using rule 16 (stmtlist)
+
+
+State 33
+
+   22 stmt: cmpdstmt .
+
+    $default  reduce using rule 22 (stmt)
+
+
+State 34
+
+   18 stmt: ifstmt .
+
+    $default  reduce using rule 18 (stmt)
+
+
+State 35
+
+   25 ifstmt: ifhead . THEN stmt $@2 ELSE stmt
+
+    THEN  shift, and go to state 57
+
+
+State 36
+
+   19 stmt: fstmt .
+
+    $default  reduce using rule 19 (stmt)
+
+
+State 37
+
+   20 stmt: astmt .
+
+    $default  reduce using rule 20 (stmt)
+
+
+State 38
+
+   29 astmt: lhs . ASG exp
+
+    ASG  shift, and go to state 58
+
+
+State 39
+
+   21 stmt: writestmt .
+
+    $default  reduce using rule 21 (stmt)
+
+
+State 40
+
+    6 vardcls: vardcls vardcl ';' .
+
+    $default  reduce using rule 6 (vardcls)
+
+
+State 41
+
+    9 vardcl: idlist ':' INT .
+
+    $default  reduce using rule 9 (vardcl)
+
+
+State 42
+
+   11 idlist: idlist ',' ID .
+
+    $default  reduce using rule 11 (idlist)
+
+
+State 43
+
+   10 vardcl: idlist1 ':' ARRAY . '[' ICONST ']' OF INT
+
+    '['  shift, and go to state 59
+
+
+State 44
+
+   13 idlist1: idlist1 ',' ID .
+
+    $default  reduce using rule 13 (idlist1)
+
+
+State 45
+
+   32 writestmt: PRINT '(' . exp ')'
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 61
+
+
+State 46
+
+   39 exp: error .
+   46 condexp: error .
+
+    THEN      reduce using rule 46 (condexp)
+    $default  reduce using rule 39 (exp)
+
+
+State 47
+
+   36 exp: ID .
+   37    | ID . '[' exp ']'
+
+    '['  shift, and go to state 62
+
+    $default  reduce using rule 36 (exp)
+
+
+State 48
+
+   38 exp: ICONST .
+
+    $default  reduce using rule 38 (exp)
+
+
+State 49
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   42 condexp: exp . NEQ exp
+   43        | exp . EQ exp
+   44        | exp . LT exp
+   45        | exp . LEQ exp
+
+    EQ   shift, and go to state 63
+    NEQ  shift, and go to state 64
+    LT   shift, and go to state 65
+    LEQ  shift, and go to state 66
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+
+State 50
+
+   26 ifhead: IF condexp .
+
+    $default  reduce using rule 26 (ifhead)
+
+
+State 51
+
+   41 ctrlexp: error .
+
+    $default  reduce using rule 41 (ctrlexp)
+
+
+State 52
+
+   40 ctrlexp: ID . ASG ICONST ',' ICONST
+
+    ASG  shift, and go to state 70
+
+
+State 53
+
+   28 fstmt: FOR ctrlexp . $@3 DO stmt
+
+    $default  reduce using rule 27 ($@3)
+
+    $@3  go to state 71
+
+
+State 54
+
+   31 lhs: ID '[' . exp ']'
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 72
+
+
+State 55
+
+   23 cmpdstmt: BEG stmtlist END .
+
+    $default  reduce using rule 23 (cmpdstmt)
+
+
+State 56
+
+   15 stmtlist: stmtlist ';' . stmt
+
+    PRINT  shift, and go to state 27
+    IF     shift, and go to state 28
+    BEG    shift, and go to state 17
+    FOR    shift, and go to state 29
+    ID     shift, and go to state 30
+
+    stmt       go to state 73
+    cmpdstmt   go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    fstmt      go to state 36
+    astmt      go to state 37
+    lhs        go to state 38
+    writestmt  go to state 39
+
+
+State 57
+
+   25 ifstmt: ifhead THEN . stmt $@2 ELSE stmt
+
+    PRINT  shift, and go to state 27
+    IF     shift, and go to state 28
+    BEG    shift, and go to state 17
+    FOR    shift, and go to state 29
+    ID     shift, and go to state 30
+
+    stmt       go to state 74
+    cmpdstmt   go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    fstmt      go to state 36
+    astmt      go to state 37
+    lhs        go to state 38
+    writestmt  go to state 39
+
+
+State 58
+
+   29 astmt: lhs ASG . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 75
+
+
+State 59
+
+   10 vardcl: idlist1 ':' ARRAY '[' . ICONST ']' OF INT
+
+    ICONST  shift, and go to state 76
+
+
+State 60
+
+   39 exp: error .
+
+    $default  reduce using rule 39 (exp)
+
+
+State 61
+
+   32 writestmt: PRINT '(' exp . ')'
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+    ')'  shift, and go to state 77
+
+
+State 62
+
+   37 exp: ID '[' . exp ']'
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 78
+
+
+State 63
+
+   43 condexp: exp EQ . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 79
+
+
+State 64
+
+   42 condexp: exp NEQ . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 80
+
+
+State 65
+
+   44 condexp: exp LT . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 81
+
+
+State 66
+
+   45 condexp: exp LEQ . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 82
+
+
+State 67
+
+   33 exp: exp '+' . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 83
+
+
+State 68
+
+   34 exp: exp '-' . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 84
+
+
+State 69
+
+   35 exp: exp '*' . exp
+
+    error   shift, and go to state 60
+    ID      shift, and go to state 47
+    ICONST  shift, and go to state 48
+
+    exp  go to state 85
+
+
+State 70
+
+   40 ctrlexp: ID ASG . ICONST ',' ICONST
+
+    ICONST  shift, and go to state 86
+
+
+State 71
+
+   28 fstmt: FOR ctrlexp $@3 . DO stmt
+
+    DO  shift, and go to state 87
+
+
+State 72
+
+   31 lhs: ID '[' exp . ']'
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+    ']'  shift, and go to state 88
+
+
+State 73
+
+   15 stmtlist: stmtlist ';' stmt .
+
+    $default  reduce using rule 15 (stmtlist)
+
+
+State 74
+
+   25 ifstmt: ifhead THEN stmt . $@2 ELSE stmt
+
+    $default  reduce using rule 24 ($@2)
+
+    $@2  go to state 89
+
+
+State 75
+
+   29 astmt: lhs ASG exp .
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 29 (astmt)
+
+
+State 76
+
+   10 vardcl: idlist1 ':' ARRAY '[' ICONST . ']' OF INT
+
+    ']'  shift, and go to state 90
+
+
+State 77
+
+   32 writestmt: PRINT '(' exp ')' .
+
+    $default  reduce using rule 32 (writestmt)
+
+
+State 78
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   37    | ID '[' exp . ']'
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+    ']'  shift, and go to state 91
+
+
+State 79
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   43 condexp: exp EQ exp .
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 43 (condexp)
+
+
+State 80
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   42 condexp: exp NEQ exp .
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 42 (condexp)
+
+
+State 81
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   44 condexp: exp LT exp .
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 44 (condexp)
+
+
+State 82
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   45 condexp: exp LEQ exp .
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 45 (condexp)
+
+
+State 83
+
+   33 exp: exp . '+' exp
+   33    | exp '+' exp .
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 33 (exp)
+
+
+State 84
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   34    | exp '-' exp .
+   35    | exp . '*' exp
+
+    '*'  shift, and go to state 69
+
+    $default  reduce using rule 34 (exp)
+
+
+State 85
+
+   33 exp: exp . '+' exp
+   34    | exp . '-' exp
+   35    | exp . '*' exp
+   35    | exp '*' exp .
+
+    $default  reduce using rule 35 (exp)
+
+
+State 86
+
+   40 ctrlexp: ID ASG ICONST . ',' ICONST
+
+    ','  shift, and go to state 92
+
+
+State 87
+
+   28 fstmt: FOR ctrlexp $@3 DO . stmt
+
+    PRINT  shift, and go to state 27
+    IF     shift, and go to state 28
+    BEG    shift, and go to state 17
+    FOR    shift, and go to state 29
+    ID     shift, and go to state 30
+
+    stmt       go to state 93
+    cmpdstmt   go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    fstmt      go to state 36
+    astmt      go to state 37
+    lhs        go to state 38
+    writestmt  go to state 39
+
+
+State 88
+
+   31 lhs: ID '[' exp ']' .
+
+    $default  reduce using rule 31 (lhs)
+
+
+State 89
+
+   25 ifstmt: ifhead THEN stmt $@2 . ELSE stmt
+
+    ELSE  shift, and go to state 94
+
+
+State 90
+
+   10 vardcl: idlist1 ':' ARRAY '[' ICONST ']' . OF INT
+
+    OF  shift, and go to state 95
+
+
+State 91
+
+   37 exp: ID '[' exp ']' .
+
+    $default  reduce using rule 37 (exp)
+
+
+State 92
+
+   40 ctrlexp: ID ASG ICONST ',' . ICONST
+
+    ICONST  shift, and go to state 96
+
+
+State 93
+
+   28 fstmt: FOR ctrlexp $@3 DO stmt .
+
+    $default  reduce using rule 28 (fstmt)
+
+
+State 94
+
+   25 ifstmt: ifhead THEN stmt $@2 ELSE . stmt
+
+    PRINT  shift, and go to state 27
+    IF     shift, and go to state 28
+    BEG    shift, and go to state 17
+    FOR    shift, and go to state 29
+    ID     shift, and go to state 30
+
+    stmt       go to state 97
+    cmpdstmt   go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    fstmt      go to state 36
+    astmt      go to state 37
+    lhs        go to state 38
+    writestmt  go to state 39
+
+
+State 95
+
+   10 vardcl: idlist1 ':' ARRAY '[' ICONST ']' OF . INT
+
+    INT  shift, and go to state 98
+
+
+State 96
+
+   40 ctrlexp: ID ASG ICONST ',' ICONST .
+
+    $default  reduce using rule 40 (ctrlexp)
+
+
+State 97
+
+   25 ifstmt: ifhead THEN stmt $@2 ELSE stmt .
+
+    $default  reduce using rule 25 (ifstmt)
+
+
+State 98
+
+   10 vardcl: idlist1 ':' ARRAY '[' ICONST ']' OF INT .
+
+    $default  reduce using rule 10 (vardcl)

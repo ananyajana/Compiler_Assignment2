@@ -1,0 +1,11 @@
+program main;
+var a: integer;
+    i: integer;
+begin
+  i := 0;
+  a := 1;
+  for i := 0, 100 do
+  begin
+    a := a + 2;
+   end;	
+end.

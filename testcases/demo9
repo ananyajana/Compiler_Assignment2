@@ -1,0 +1,16 @@
+program main;
+var a, b: integer;
+i: integer;
+begin
+
+a := 1;
+b := 10;
+for i := 1, 100 do
+begin
+  a := a + 2;
+  for b := 1, 10 do
+    begin a := a+b 
+  end
+end; 
+print(a)
+end.

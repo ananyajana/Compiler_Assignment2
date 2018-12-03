@@ -1,0 +1,20 @@
+program main;
+var a, b: integer;
+    i, j, k: integer;
+begin
+  a := 0;
+  b := 1;
+  for i := 1, 10 do
+  begin
+      for j := 1, 10 do
+      begin
+         for k := 1, 10 do
+         begin
+           a := a + 1;
+           b := b + 1
+         end	
+      end	
+  end;	
+  print(a);
+  print(b)
+end.

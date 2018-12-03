@@ -1,0 +1,24 @@
+Simulator can handle logical operations:
+   and, or, xor
+-----------------------------------------
+The latencies for instructions are
+
+load/store  5 cycles
+mult/div    2 cycles
+rest        1 cycle
+-----------------------------------------
+
+To call simulator on input file  "test.i", execute the 
+following command on the Linux prompt:
+
+> ./sim < test.i
+
+The system reports the program output, and the number of
+instructions and operations executed, the the number of
+cycles.
+-----------------------------------------
+
+The subdirectory "src" contains the source code of the 
+ILOC simulator. 
+
+
